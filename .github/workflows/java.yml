@@ -1,0 +1,40 @@
+name: Verificar JavaFX y PostgreSQL
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: tienda_javafx
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: prueba_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DB_URL: jdbc:postgresql://localhost:5432/tienda_javafx
+      DB_USER: postgres
+      DB_PASSWORD: prueba_ci
+      RUN_DB_TESTS: 'true'
+      RUN_UI_TESTS: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Preparar tablas
+        run: PGPASSWORD="$DB_PASSWORD" psql -h localhost -U postgres -d tienda_javafx -v ON_ERROR_STOP=1 -f database/02-tablas.sql
+      - name: Compilar y probar DAO, validaciones y FXML
+        run: xvfb-run -a bash mvnw -B verify
