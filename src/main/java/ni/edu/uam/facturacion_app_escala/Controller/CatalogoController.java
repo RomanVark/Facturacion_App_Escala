@@ -3,6 +3,7 @@ package ni.edu.uam.facturacion_app_escala.Controller;
 import javafx.fxml.FXML;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
@@ -17,7 +18,8 @@ public abstract class CatalogoController<T> {
  @FXML protected Label estado;
  @FXML protected Button eliminarBoton;
  protected T seleccionado;
- private FilteredList<T> filas=new FilteredList<>(FXCollections.observableArrayList());
+ private final ObservableList<T> registros=FXCollections.observableArrayList();
+ private final FilteredList<T> filas=new FilteredList<>(registros);
  protected abstract List<T> cargar() throws Exception;
  protected abstract void configurar();
  protected abstract T formulario();
@@ -41,7 +43,7 @@ public abstract class CatalogoController<T> {
  @FXML public void nuevo() { tabla.getSelectionModel().clearSelection(); seleccionado=null; limpiar(); eliminarBoton.setDisable(true); }
  @FXML public void actualizar() {
   estado.setText("Cargando registros…");
-  Ui.ejecutar(root,this::cargar, datos->{ despuesDeCargar(); filas.getSource().setAll(datos); nuevo(); estado.setText(datos.size()+" registros cargados · Selecciona una fila para editar"); },e->estado.setText(Ui.mensaje(e)));
+  Ui.ejecutar(root,this::cargar, datos->{ despuesDeCargar(); registros.setAll(datos); nuevo(); estado.setText(datos.size()+" registros cargados · Selecciona una fila para editar"); },e->estado.setText(Ui.mensaje(e)));
  }
  @FXML public void guardar() {
   try { T e=formulario();
