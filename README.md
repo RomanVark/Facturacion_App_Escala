@@ -11,7 +11,7 @@ Aplicación de escritorio JavaFX para administrar **categorías, productos y cli
 
 ## 1. Crear la base y las tablas
 
-En pgAdmin, abre Query Tool conectado a `postgres` y ejecuta `database/01-crear-base.sql` una sola vez. Luego abre Query Tool conectado a **tienda_javafx** y ejecuta `database/02-tablas.sql`. Puedes ejecutar `database/03-datos-ejemplo.sql` una sola vez si deseas datos de demostración.
+En pgAdmin, abre Query Tool conectado a `postgres` y ejecuta `database/01-crear-base.sql` una sola vez. Luego abre Query Tool conectado a **tienda_javafx** y ejecuta `database/02-tablas.sql`. El documento SQL `database/03-datos-ejemplo.sql` incluye **5 categorías, 10 productos (dos por categoría) y 10 clientes ficticios**, con instrucciones y consultas para verificar las cantidades. Puedes volver a ejecutarlo: omite nombres de categoría, códigos y documentos existentes sin modificar sus datos. En una base inicialmente vacía deja 25 registros en total.
 
 Alternativa desde terminal:
 

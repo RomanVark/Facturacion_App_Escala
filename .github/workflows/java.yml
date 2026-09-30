@@ -35,6 +35,8 @@ jobs:
           java-version: '17'
           cache: maven
       - name: Preparar tablas
-        run: PGPASSWORD="$DB_PASSWORD" psql -h localhost -U postgres -d tienda_javafx -v ON_ERROR_STOP=1 -f database/02-tablas.sql
+        run: |
+          PGPASSWORD="$DB_PASSWORD" psql -h localhost -U postgres -d tienda_javafx -v ON_ERROR_STOP=1 -f database/02-tablas.sql
+          PGPASSWORD="$DB_PASSWORD" psql -h localhost -U postgres -d tienda_javafx -v ON_ERROR_STOP=1 -f database/03-datos-ejemplo.sql
       - name: Compilar y probar DAO, validaciones y FXML
         run: xvfb-run -a bash mvnw -B verify
