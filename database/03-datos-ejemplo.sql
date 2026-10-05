@@ -21,7 +21,7 @@ FROM (VALUES
     ('Limpieza')
 ) AS datos(nombre)
 WHERE NOT EXISTS (
-    SELECT 1 FROM categoria c WHERE c.nombre = datos.nombre
+    SELECT 1 FROM categoria c WHERE LOWER(BTRIM(c.nombre)) = LOWER(BTRIM(datos.nombre))
 );
 
 -- 2. PRODUCTOS (10: dos por cada categoría)
@@ -31,7 +31,7 @@ WHERE NOT EXISTS (
 INSERT INTO producto
     (codigo, nombre, categoria_id, precio_venta, existencia, ruta_imagen, activo)
 SELECT datos.codigo, datos.nombre,
-       (SELECT MIN(c.id) FROM categoria c WHERE c.nombre = datos.categoria),
+       (SELECT MIN(c.id) FROM categoria c WHERE LOWER(BTRIM(c.nombre)) = LOWER(BTRIM(datos.categoria))),
        datos.precio, datos.existencia, '', TRUE
 FROM (VALUES
     ('P001', 'Cuaderno universitario', 'Papelería', 85.50, 24),

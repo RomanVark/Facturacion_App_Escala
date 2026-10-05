@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="root" fx:controller="ni.edu.uam.facturacionapp.Controller.CategoriaController" prefWidth="1100" prefHeight="800" spacing="16" styleClass="page" stylesheets="@styles.css">
+ <HBox alignment="CENTER_LEFT" spacing="16"><VBox spacing="6" HBox.hgrow="ALWAYS"><Label text="CATÁLOGOS / CATEGORÍAS" styleClass="eyebrow"/><Label text="Categorías" styleClass="title"/></VBox><Button text="Actualizar tabla" onAction="#recargar"/></HBox>
+ <Label text="Crea un registro o selecciona una fila para editarlo. Los campos con * son obligatorios." styleClass="muted" wrapText="true"/>
+ <VBox spacing="16" styleClass="card"><Label text="Datos del registro" styleClass="card-title"/>
+ <GridPane hgap="20" vgap="14"><columnConstraints><ColumnConstraints percentWidth="33.33"/><ColumnConstraints percentWidth="33.33"/><ColumnConstraints percentWidth="33.34"/></columnConstraints><VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"><Label text="Nombre *"/><TextField fx:id="nombre" maxWidth="Infinity" /></VBox><CheckBox fx:id="activa" text="Categoría activa" GridPane.columnIndex="2" GridPane.rowIndex="0"/></GridPane>
+ <HBox spacing="10"><Button text="Guardar nuevo" onAction="#guardar" styleClass="primary"/><Button text="Actualizar seleccionado" onAction="#actualizarSeleccionado"/><Button text="Nuevo / Limpiar" onAction="#nuevo"/><Region HBox.hgrow="ALWAYS"/><Button fx:id="eliminarBoton" text="Eliminar seleccionado" onAction="#eliminar" styleClass="danger"/></HBox>
+ </VBox>
+ <TextField fx:id="filtro" promptText="Buscar en categorías…"/>
+ <TableView fx:id="tabla" VBox.vgrow="ALWAYS" prefHeight="290"><columns><TableColumn text="ID" prefWidth="60"/><TableColumn text="Nombre" prefWidth="620"/><TableColumn text="Estado" prefWidth="150"/></columns></TableView>
+ <Label fx:id="estado" wrapText="true" styleClass="status" maxWidth="Infinity"/>
+</VBox>

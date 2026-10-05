@@ -5,12 +5,13 @@ CREATE TABLE IF NOT EXISTS categoria (
  nombre VARCHAR(100) NOT NULL CHECK (btrim(nombre) <> ''),
  activa BOOLEAN NOT NULL DEFAULT TRUE
 );
+CREATE UNIQUE INDEX IF NOT EXISTS uq_categoria_nombre_normalizado ON categoria (LOWER(BTRIM(nombre)));
 CREATE TABLE IF NOT EXISTS producto (
  id SERIAL PRIMARY KEY,
  codigo VARCHAR(50) NOT NULL UNIQUE CHECK (btrim(codigo) <> ''),
  nombre VARCHAR(150) NOT NULL CHECK (btrim(nombre) <> ''),
  categoria_id INTEGER NOT NULL,
- precio_venta NUMERIC(12,2) NOT NULL CHECK (precio_venta >= 0),
+ precio_venta NUMERIC(12,2) NOT NULL CHECK (precio_venta > 0),
  existencia INTEGER NOT NULL DEFAULT 0 CHECK (existencia >= 0),
  ruta_imagen VARCHAR(500),
  activo BOOLEAN NOT NULL DEFAULT TRUE,
